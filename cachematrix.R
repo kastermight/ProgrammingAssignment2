@@ -11,11 +11,11 @@
 makeCacheMatrix <- function(x = matrix()) {
   i <- NULL                         # initialization of the inverse
   set <- function(y) {              # matrix setter
-    x <<- y                         # set matrix in global env
-    i <<- NULL                      # set inverse as NULL in global env
+    x <<- y                         # set matrix in parent env
+    i <<- NULL                      # set inverse as NULL in parent env
   }
   get <- function() x               # matrix getter
-  setinv <- function(inv) i <<- inv # inverse matrix setter in global env
+  setinv <- function(inv) i <<- inv # inverse matrix setter in parent env
   getinv <- function() i            # inverse matrix getter
   list(set = set, get = get,
        setinv = setinv,
@@ -41,7 +41,7 @@ cacheSolve <- function(x, ...) {
                                    # stored inverse is NULL
   data <- x$get()                  # get the matrix
   i <- solve(data)                 # calculate its inverse
-  x$setinv(i)                      # set inverse in global env
+  x$setinv(i)                      # set inverse in parent env
   message('calculating and setting data to the cache')
   i
 }
